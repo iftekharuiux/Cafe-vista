@@ -1,0 +1,128 @@
+<%- include("../../partials/head.ejs")  %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" integrity="sha512-zxBiDORGDEAYDdKLuYU9X/JaJo/DPzE42UubfBw9yg8Qvb2YRRIQ8v4KsGHOx2H1/+sdSXyXxLXv5r7tHc9ygg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <%- include("../../partials/alert.ejs") %>
+    <%- include("../../partials/header.ejs") %>
+        <section id="auth" style="max-height: 200vh; height: 194vh;">
+            <div class="form" style="width: 600px">
+                <h2>EDIT PROFILE</h2>
+                <div class="change-profile-img">
+                    <img
+                        id="profilePics"
+                        src="<%= user.profilePics %>"
+                        alt="profile_pic"
+                    />
+                    <div class="choose-img">
+                        <form
+                            action="/uploads/profilePics"
+                            id="profilePicsForm"
+                            method="post"
+                            enctype="multipart/form-data"
+                        >
+                            <label title="Change Profile Picture" for="profilePicsFile">
+                                <i class="bi bi-camera"></i>
+                            </label>
+                            <input
+                                class="profilePicsFile"
+                                name="profilePics"
+                                type="file"
+                                id="profilePicsFile"
+                                accept="image/*"
+                            />
+                        </form>
+                    </div>
+                </div>
+                <input
+                    title="Remove current image"
+                    id="removeProfilePicsBtn"
+                    type="button"
+                    value="Remove Image"
+                    style="display: <%= (user.profilePics.includes('default.jpg')) ? "none" : "block" %>;"
+                />
+                <form action="/profile/edit-profile" method="post" class="input">
+                    <div class="inputBox">
+                        <label>Name</label>
+                        <input class="<%= errors.name && "is-invalid"%>" value="<%= profile.name || user.username %>" type="text" name="name" placeholder="Enter name"/>
+                        <% if (errors.name) { %>
+                            <div class="invalid-feedback">
+                                <p><%= errors.name %> </p>
+                            </div>
+                        <% } %>  
+                    </div>
+                    <div class="inputBox">
+                        <label>Email</label>
+                        <input type="email" name="email" value="<%= user.email %>" disabled />
+                        <% if (errors.email) { %>
+                            <div class="invalid-feedback">
+                                <p><%= errors.email %></p>
+                            </div>
+                        <% } %>  
+                    </div>
+                    <div class="inputBox">
+                        <label>Designation</label>
+                        <input type="text" class="<%= errors.title && "is-invalid"%>" name="title" value="<%= profile.title %>" placeholder="Enter a title" />
+                        <% if (errors.title) { %>
+                            <div class="invalid-feedback">
+                                <p><%= errors.title %></p>
+                            </div>
+                        <% } %>  
+                    </div>
+                    <div class="inputBox">
+                        <label>Short Bio</label>
+                        <textarea class="<%= errors.bio && "is-invalid"%>" name="bio" id="bio" rows="6" placeholder="Enter a short bio"><%= profile.bio %></textarea>
+                        <% if (errors.bio) { %>
+                            <div class="invalid-feedback">
+                                <p><%= errors.bio %> </p>
+                            </div>
+                        <% } %>  
+                    </div>
+                    <div class="inputBox">
+                        <label>Website or Social Media</label>
+                        <input type="url" class="<%= errors.website && "is-invalid"%>" name="website" id="website" value="<%= profile.website %>" placeholder="Provide url" />
+                        <% if (errors.website) { %>
+                            <div class="invalid-feedback">
+                                <p><%= errors.website %> </p>
+                            </div>
+                        <% } %>  
+                    </div>
+                    <div class="inputBox">
+                        <input type="submit" value="Update Profile"/>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </header>
+
+    <div id="crop-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Resize Image</h5>
+                    <button type="button" class="cancel-cropping"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cropped-image"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="cancel-cropping">
+                        Close
+                    </button>
+                    <button id="upload-image" type="button">
+                        Upload
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include("../../partials/footer.ejs") %>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"
+        integrity="sha512-Gs+PsXsGkmr+15rqObPJbenQ2wB3qYvTHuJO6YJzPe/dTLvhy0fmae2BcnaozxDo5iaF8emzmCZWbQ1XXiX2Ig=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    ></script>
+    <script src="/scripts/profilePicUpload.js"></script>
+</body>
+</html>

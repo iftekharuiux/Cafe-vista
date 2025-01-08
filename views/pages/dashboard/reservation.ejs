@@ -1,0 +1,71 @@
+<%- include("../../partials/head.ejs") %>
+</head>
+<body>
+        <%- include("../../partials/alert.ejs") %>
+        <%- include("../../partials/header.ejs") %>
+        <section id="admin-intro">
+            <div class="breadcrumb">
+                <h1>ADMIN DASHBOARD</h1>
+                <p><span>HOME</span> / DASHBOARD / RESERVATION</p>
+            </div>
+        </section>
+    </header>
+    <section id="all-subscribed-mail">
+        <div class="sm-heading">
+            <span>RESERVATION</span>
+            <h1>RESERVATION ORDER</h1>
+        </div> 
+        <div class="container-sm">
+            <div class="full-row">
+                <div class="table-holder">
+                    <table>
+                        <tr>
+                            <th>#</th>
+                            <th>Username</th>
+                            <th>Person</th>
+                            <th>Floor</th>
+                            <th>Reserve Date</th>
+                            <th>Reserve Time</th>
+                            <th>Requested On</th>
+                            <th>Status</th>
+                            <th>Options</th>
+                        </tr>
+                        <% if(reservation) { %> 
+                            <% reservation.forEach((reserve, index) => { %> 
+                                <tr>
+                                    <td><%= index + 1 %></td>
+                                    <td><%= reserve.user.username %></td>
+                                    <td><%= reserve.person %></td>  
+                                    <td><%= reserve.floor %></td>  
+                                    <td><%= (reserve.date).toDateString() %></td>  
+                                    <td><%= reserve.time %></td>  
+                                    <td><%= (reserve.createdAt).toDateString() %></td>
+                                    <td><%= reserve.status %></td>  
+                                    <td id="mail-status">
+                                        <% if(reserve.status == "Pending") { %>
+                                            <a href="/dashboard/approveReservation/<%= reserve._id %>"><span>Approve</span></a>
+                                        <% } %>  
+                                        <a href="/dashboard/rejectReservation/<%= reserve._id %>"><span>Reject</span></a>
+                                    </td>
+                                </tr>
+                            <% }) %> 
+                        <% } else { %>
+                            <tr>
+                                <td colspan="8">No reservation request found</td>
+                            </tr>
+                        <% } %>  
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%- include("./side-panel.ejs") %> 
+    <%- include("../../partials/footer.ejs") %>
+
+    <script>
+        const bookingStatus = document.querySelector("#mail-status a:first-child span");
+        (bookingStatus.innerHTML == "Reject") ? bookingStatus.classList.add("rejected") : bookingStatus.classList.remove("rejected");
+    </script>
+
+</body>
+</html>

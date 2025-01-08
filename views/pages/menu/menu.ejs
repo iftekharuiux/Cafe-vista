@@ -1,0 +1,92 @@
+<%- include("../../partials/head.ejs")  %>
+</head>
+
+<body>
+    <%- include("../../partials/alert.ejs")  %>
+    <%- include("../../partials/header.ejs") %>
+    <section id="all-menu">
+        <div class="breadcrumb">
+            <h1>MENUS & PRODUCTS</h1>
+            <p><span>HOME</span> / MENU / ALL</p>
+        </div>
+    </section>
+
+    </header>
+    <!-- menu section -->
+    <section id="menu">
+        <div class="sm-heading">
+            <span>MENU</span>
+            <h1>CAFE ALL MENU & PRODUCT</h1>
+        </div>
+        <div class="controls">
+            <button class="filter" title="All items">All</button>
+            <button class="filter" title="Only menus">Menu</button>
+            <button class="filter" title="Only products">Product</button>
+        </div>
+        <div class="container-sm">
+            <div class="full-row">
+                <% if(menus.length == 0){ %>
+                <p style="color: #c7a17a">No menu available right now.</p>
+                <% } else { %>
+                <% menus.length > 0 && menus.forEach(menu => { %>
+                <!-- single menu showing -->
+                <a href="/menu/view/<%= menu._id %>" class="single-menu shop-menu-item"
+                    data-category="<%= menu.category %>" style="text-decoration: none;">
+                    <img src="<%= menu.image %>" alt="menu">
+                    <div class="inner-section">
+                        <span><%= menu.name %> </span>
+                        <span><%= menu.price %> </span>
+                    </div>
+                </a>
+                <% }) %>
+                <% } %>
+            </div>
+        </div>
+        <div class="menu-footer">
+            <% if(user && user.role == "admin") { %>
+            <a onclick="revealModal();" href="javascript:void(0)"><i class="bi bi-plus-lg"></i> Add New Menu or
+                Product</a>
+            <% } %>
+        </div>
+    </section>
+
+    <!-- add menu or product modal -->
+    <div class="add-menu-modal">
+        <div class="modal-wrapper">
+            <form style="height: 500px;" action="/menu/add-menu" class="modal-section" enctype="multipart/form-data"
+                method="post">
+                <div class="heading">
+                    <h3>ADD PRODUCT</h3>
+                    <span id="order-modal-close" onclick="closeModal();"><i class="bi bi-x-lg"></i></span>
+                </div>
+                <div class="modal-body" style="height: 74.5%;">
+                    <div class="prod-des">
+                        <input type="file" name="item" title="upload product image" required>
+                        <div>
+                            <label for="category">Choose Item Category: </label>
+                            <select name="category" id="category">
+                                <option value="menu">Menu</option>
+                                <option value="product">Product</option>
+                            </select>
+                        </div>
+                        <input name="addProductName" type="text" id="addProductName" placeholder="Enter product name"
+                            required>
+                        <input name="addProductPrice" type="number" min="0.1" id="addProductPrice"
+                            placeholder="Enter product price ($)" step="any" required>
+                        <textarea name="description" id="description" rows="10" placeholder="Description"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="ADD NOW">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <%- include("../../partials/footer.ejs") %>
+
+    <script src="/scripts/menu.js"></script>
+    <script src="/scripts/motion.js"></script>
+</body>
+
+</html>

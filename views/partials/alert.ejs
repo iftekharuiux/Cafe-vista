@@ -1,0 +1,13 @@
+<div id="alert-div">
+	<% if(flashMessage.success) { %>
+	<div class="alert alert-success" role="alert">
+		<%= flashMessage.success %>
+		<span class="close-alert"><i class="bi bi-x-lg"></i></span>
+	</div>
+	<% } %> <% if(flashMessage.fail) { %>
+	<div class="alert alert-danger" role="alert">
+		<%= flashMessage.fail %>
+		<span class="close-alert"><i class="bi bi-x-lg"></i></span>
+	</div>
+	<% } %>
+</div>

@@ -1,0 +1,63 @@
+<%- include("../../partials/head.ejs") %>
+</head>
+<body>
+    <%- include("../../partials/alert.ejs") %>
+    <%- include("../../partials/header.ejs") %>
+        <section id="single-blog">
+            <div class="wrapper-sec">
+                <div class="main-blog-sec">
+                    <% if(singleBlog) { %>
+                        <div class="heading">
+                            <div>
+                                <h2><%= singleBlog.title %></h2>
+                                <p>By - <%= singleBlog.author.username %>, At: <%= singleBlog.createdAt.toLocaleDateString() %></p>
+                            </div>
+                            <div class="options" style="display: flex; gap: 10px;">
+                                <!-- blog post delete -->
+                                <% if(user && singleBlog) { %>    
+                                    <!-- displaying bookmark icon -->
+                                    <% if(String(singleBlog.author._id) == String(user._id)) { %> 
+                                        <a title="Delete Post" style="color: whitesmoke;" href="/blog/delete/<%= singleBlog._id %>"><i class="bi bi-trash"></i></a>                                  
+                                    <% } %>   
+                                <% } %> 
+                            </div>
+                        </div>
+                        <div class="image-section">
+                            <img src="<%= singleBlog.thumbnail %>" alt="blog-img">
+                        </div>
+                        <div class="body">
+                            <p><%- singleBlog.body %></p>
+                        </div>
+                    <% } else { %> 
+                        <p style="color: whitesmoke;">Something went wrong...</p>
+                    <% } %> 
+                </div>
+                <% if(singleBlog) { %>
+                    <form class="full-row" action="/blog/edit-post/<%= singleBlog._id %>" enctype="multipart/form-data" method="post">
+                        <h2>Edit the Blog</h2>
+                        <input type="text" class="<%= errors.title && "is-invalid"%>" name="title" placeholder="Blog Title" value="<%= singleBlog.title || (errors.title && values.title) %>">
+                        <% if (errors.title) { %>
+                            <div class="invalid-feedback">
+                                <p><%= errors.title %></p>
+                            </div>
+                        <% } %> 
+                        <textarea name="body" id="rich-text-editor" class="<%= errors.body && "is-invalid"%>" placeholder="Enter your blog body"><%- singleBlog.body %><%= errors.title && values.body %></textarea>
+                        <% if (errors.body) { %>
+                            <div class="invalid-feedback">
+                                <p><%= errors.body %></p>
+                            </div>
+                        <% } %> 
+                        <input type="file" name="update-thumbnail" title="Upload Thumbnail">
+                        <button type="submit">Update Post</button>
+                    </form>
+                <% } %>  
+            </div> 
+        </section>
+    </header>
+
+    <%- include("../../partials/footer.ejs") %>
+    <script src="https://cdn.tiny.cloud/1/xq007oqlf2vjqc9q3rw3iovsa5qcbj4g1o8x4fz6z7dkla7a/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="/scripts/create-new-blog.js"></script>
+    <script src="/scripts/singlePage.js"></script>
+</body>
+</html>

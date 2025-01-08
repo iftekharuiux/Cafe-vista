@@ -1,0 +1,103 @@
+<%- include("../../partials/head.ejs") %>
+</head>
+
+<body>
+    <%- include("../../partials/alert.ejs") %>
+    <%- include("../../partials/header.ejs") %>
+    <section id="checkout">
+        <div class="main-wrapper">
+            <form class="checkout-box" action="/" method="post">
+                <div class="left">
+                    <h3>Your Shopping Cart</h3>
+                    <div class="carted-product">
+                        <img src="<%= productDetails.imageMenu %> " alt="product-img">
+                        <div class="inner-cart-box">
+                            <input type="hidden" name="productImg" value="<%= productDetails.imageMenu %>">
+                            <input type="text" name="checkoutProductName" id="checkout-product-name"
+                                value="<%= productDetails.productName %>" readonly>
+                            <div class="inc-dec-loop">
+                                <div class="inc-dec-cart">
+                                    <span> - </span>
+                                    <input name="quantity" id="quantity" type="number"
+                                        value="<%= productDetails.productCount %>" readonly>
+                                    <span> + </span>
+                                </div>
+                                <input type="text" name="checkoutPrice" value="<%= productDetails.productPrice %>"
+                                    id="checkoutPrice" readonly>
+                            </div>
+                        </div>
+                        <div class="remove-product">
+                            <a href="/menu/all"><i class="bi bi-x-lg"></i></a>
+                        </div>
+                    </div>
+                    <div class="address-location">
+                        <div class="main-info">
+                            <div>
+                                <small>Name on Order</small>
+                                <input type="text" name="name" required>
+                            </div>
+                            <div>
+                                <small>Phone Number</small>
+                                <div class="phone-and-country">
+                                    <select name="bd" id="bd">
+                                        <option value="+88">+88</option>
+                                        <option value="+1">+1</option>
+                                        <option value="+92">+92</option>
+                                        <option value="+91">+91</option>
+                                    </select>
+                                    <input type="tel" name="phone" pattern="[0-9]{11}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <small>Address</small>
+                        <input type="text" name="address" required>
+                    </div>
+                    <input type="submit" value="Complete Purchase">
+                </div>
+                <div class="right">
+                    <div class="wrapper-coat">
+                        <p>Direct card payment is disabled for now. Use ssl commerz methods.</p>
+                    </div>
+                    <h3>Your Card Details</h3>
+                    <small style="margin-top: 0px;">Card Type</small>
+                    <div class="cards">
+                        <img class="selected-card" src="/images/visa.png" alt="visa" title="visa">
+                        <img src="/images/mastercard.png" alt="mastercard" title="mastercard">
+                        <img src="/images/paypal.png" alt="paypal" title="paypal">
+                    </div>
+                    <small>Name on Card</small>
+                    <input name="cardName" type="text">
+                    <small>Card Number</small>
+                    <input name="cardNumber" type="text">
+                    <div class="expiry-cvv">
+                        <div class="expiry">
+                            <small>Expiry Date</small>
+                            <input name="expireDate" type="date">
+                        </div>
+                        <div class="cvv">
+                            <small>CVV</small>
+                            <input name="cvv" type="text">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    </header>
+    <!-------------------- javascript code not found error start --------------->
+    <div hidden class="order-modal">
+        <div id="order-modal-close" class="modal-wrapper modal-section inc-dec">
+            <span id="discover-machine"></span>
+            <input type="hidden" id="price-machine">
+            <span></span>
+        </div>
+    </div>
+    <!-------------------- javascript code not found error end ----------------->
+
+    <%- include("../../partials/footer.ejs") %>
+    <script src="/scripts/checkout.js"></script>
+
+</body>
+
+</html>

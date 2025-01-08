@@ -1,0 +1,101 @@
+<%- include("../../partials/head.ejs") %>
+</head>
+<body>
+        <%- include("../../partials/alert.ejs") %>
+        <%- include("../../partials/header.ejs") %>
+        <section id="admin-intro">
+            <div class="breadcrumb">
+                <h1>ADMIN DASHBOARD</h1>
+                <p><span>HOME</span> / DASHBOARD / EDIT ITEMS</p>
+            </div>
+        </section>
+    </header>
+    <section id="menu">
+        <div class="sm-heading">
+            <span>EDIT ITEMS</span>
+            <h1>MODIFY ALL ITEMS</h1>
+        </div> 
+        <div class="controls">           
+            <button class="filter" title="All items">All</button>
+            <button class="filter" title="Only menus">Menu</button>
+            <button class="filter" title="Only products">Product</button>
+        </div>
+        <div class="container-sm">
+            <div class="full-row">
+                <% if(menus.length == 0){ %>
+                    <p style="color: #c7a17a">No menu available right now.</p>
+                <% } else { %>
+                    <% menus.length > 0 && menus.forEach(menu => { %> 
+                        <!-- single menu showing -->
+                        <div class="single-menu" data-category="<%= menu.category %>">
+                            <img src="<%= menu.image %>" alt="menu">                          
+                            <div class="inner-section">
+                                <span><%= menu.name %></span>
+                                <input id="product-main-id" type="hidden" value="<%= menu._id %>">
+                                <span><%= menu.price %></span>
+                            </div>
+                            <!-- edit option -->
+                            <div class="edit-opt">
+                                <input type="hidden" value="<%= menu._id %>">
+                                <a onclick="revealConfirmation(this);" href="javascript:void(0);"><span title="Delete Item"><i class="bi bi-trash"></i></span></a>
+                                <span class="edit-product" title="Edit Item"><i class="bi bi-pen"></i></span>
+                            </div>
+                        </div>
+                    <% }) %> 
+                <% } %>   
+            </div>
+        </div>
+    </section>
+    <!-- modal for menu order editing -->
+    <div class="order-modal-edit">
+        <div class="modal-wrapper">
+            <form class="modal-section" action="/dashboard/edit-item" enctype="multipart/form-data" method="post">
+                <div class="heading">
+                    <h3>EDIT INFORMATION</h3>
+                    <span id="order-modal-close" onclick="clsModal();"><i class="bi bi-x-lg"></i></span>
+                </div>
+                <div class="modal-body">
+                    <div class="prod-img-div">
+                        <img id="prod-img" src="" alt="product-img">
+                        <label for="changeImg"><i class="bi bi-upload"></i> Change Img</label>
+                        <input type="file" id="changeImg" name="changedImg" onchange="uploadFile(this);">
+                    </div>
+                    <!-- hidden input for passing item id -->
+                    <input type="hidden" id="prod-main-id" name="itemId" value="" >
+                    <div class="prod-des">
+                        <p>EDIT NAME & PRICE</p>
+                        <input name="productName" type="text" id="placeName" >
+                        <input name="productPrice" type="number" step="any" min="0.1" id="priceEdit">
+                        <input name="prevImg" type="hidden" id="prev-img" value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="UPDATE INFO">
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- confirmation modal -->
+    <div class="confirmation-modal">
+        <div class="modal-section">
+            <span class="closeModal"><i class="bi bi-x-lg"></i></span>
+            <div class="heading">
+                <span><i class="bi bi-x-circle"></i></span>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure?</h4>
+                <p>Do you really want to delete this item? This process cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="closeConfirmModal">Cancel</button>
+                <a id="delCmdItem" style="all: unset;" href=""><button>Delete</button></a>
+            </div>
+        </div>
+    </div>
+
+    <%- include("./side-panel.ejs") %> 
+    <%- include("../../partials/footer.ejs") %>
+
+    <script src="/scripts/edit-items.js"></script>
+</body>
+</html>

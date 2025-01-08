@@ -1,0 +1,47 @@
+<%- include("../../partials/head.ejs")  %>
+</head>
+
+<body>
+    <%- include("../../partials/alert.ejs")  %>
+    <%- include("../../partials/header.ejs") %>
+    <section id="all-menu">
+        <div class="breadcrumb">
+            <h1>SEARCH RESULT</h1>
+            <p><span>HOME</span> / SEARCH RESULT OF - "<%= keyword %>"</p>
+        </div>
+    </section>
+    </header>
+
+    <!-- search result section -->
+    <section id="search-result">
+        <div class="sm-container" id="res">
+            <% if(searchedMenu && searchedMenu.length > 0) { %>
+            <% searchedMenu.forEach((singleMenu) => { %>
+            <a class="shop-menu-item" href="/menu/view/<%= singleMenu._id %> ">
+                <div class="result-body">
+                    <div class="short-img">
+                        <img src="<%= singleMenu.image %>" alt="search-img">
+                    </div>
+                    <div class="short-body">
+                        <div class="name-price">
+                            <span><%= singleMenu.name %> - </span>
+                            <span><%= singleMenu.price %></span>
+                        </div>
+                        <p><%= singleMenu.description %></p>
+                    </div>
+                </div>
+            </a>
+            <% }) %>
+            <% } else { %>
+            <p style="color: whitesmoke;">Oops! no items found.</p>
+            <% } %>
+        </div>
+    </section>
+
+    <%- include("../../partials/footer.ejs") %>
+
+    <script src="/scripts/menu.js"></script>
+    <script src="/scripts/motion.js"></script>
+</body>
+
+</html>

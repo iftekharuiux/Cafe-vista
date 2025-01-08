@@ -1,0 +1,47 @@
+<%- include("../../partials/head.ejs")  %>
+</head>
+<body>
+    <%- include("../../partials/alert.ejs")  %>
+    <%- include("../../partials/header.ejs") %>
+        <section id="auth">
+            <form class="form" action="/auth/login" method="post">
+                <h2>Login</h2>
+                <div class="input">
+                    <div class="inputBox">
+                        <label>Email</label>
+                        <input type="email" class="<%= ( errors.email || errors.password ) && "is-invalid" %>" value="<%= values.email %>" name="email" placeholder="example@xyz.com"/>
+                        <% if (errors.email || errors.password) { %>
+                            <div class="invalid-feedback">
+                                <% if (errors.email && !(errors.email).includes("Invalid username or password")) { %> 
+                                    <p><%= errors.email %></p>
+                                <% } %> 
+                                <% if ((errors.password).includes("Invalid username or password")) { %> 
+                                    <p>Invalid username or password</p>
+                                <% } %> 
+                            </div>
+                        <% } %> 
+                    </div>
+                    <div class="inputBox">
+                        <label>Password</label>
+                        <input type="password" class="<%= errors.password && "is-invalid" %> %>" name="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"/>
+                        <% if (errors.password) { %>
+                            <div class="invalid-feedback">
+                                <% if (!(errors.password).includes("Invalid username or password")) { %> 
+                                    <p><%= errors.password %></p>
+                                <% } %> 
+                            </div>
+                        <% } %> 
+                    </div>
+                    <div class="inputBox">
+                        <input type="submit" value="Log In"/>
+                    </div>
+                </div>
+                <p class="reminder">Don't have an account? <a href="/auth/signup">Create now</a></p>
+            </form>
+        </section>
+
+    </header>
+
+    <%- include("../../partials/footer.ejs") %>
+</body>
+</html>

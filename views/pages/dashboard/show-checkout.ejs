@@ -1,0 +1,74 @@
+<%- include("../../partials/head.ejs") %>
+</head>
+<body>
+        <%- include("../../partials/alert.ejs") %>
+        <%- include("../../partials/header.ejs") %>
+        <section id="admin-intro">
+            <div class="breadcrumb">
+                <h1>ADMIN DASHBOARD</h1>
+                <p><span>HOME</span> / DASHBOARD / CHECKOUTS</p>
+            </div>
+        </section>
+    </header>
+    <section id="all-subscribed-mail">
+        <div class="sm-heading" id="show-checkout">
+            <span>CHECKOUTS</span>
+            <h1>ALL CHECKOUT</h1>
+        </div> 
+        <div class="container-sm">
+            <div class="full-row">
+                <ul>
+                    <% if(user && allOrders) { %>
+                        <% allOrders.forEach((order) => { %>
+                            <li>
+                                <div class="checkout-img">
+                                    <img src="<%= order.productImg %>" alt="product">
+                                </div>
+                                <div class="checkout-details">
+                                    <h3><%= order.checkoutProductName %></h3>
+                                    <span class="quantity-sl"><%= order.quantity %>x</span>
+                                    <span title="total">Total - <%= order.checkoutPrice %></span>
+                                    <p>Order By - <%= order.name %></p>
+                                </div>
+                                <!-- steps -->
+                                <div class="step">
+                                    <% if(order.status != "delivering") { %> 
+                                        <a href="/dashboard/deliver/<%= order._id %>"><button>Deliver</button></a>
+                                    <% } else { %> 
+                                        <a href="/dashboard/cancel/<%= order._id %>"><button id="o-cancel">Cancel</button></a>
+                                    <% } %> 
+                                    <input type="hidden" value="<%= order._id %>">
+                                    <a onclick="revealConfirmation(this);" href="javascript:void(0);"><button style="background-color: #ff0000c7;">Delete</button></a>
+                                </div>
+                            </li>
+                        <% }) %>
+                    <% } %> 
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- confirmation modal -->
+    <div class="confirmation-modal">
+        <div class="modal-section">
+            <span class="closeModal"><i class="bi bi-x-lg"></i></span>
+            <div class="heading">
+                <span><i class="bi bi-x-circle"></i></span>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure?</h4>
+                <p>Do you really want to delete this checkout? This process cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="closeConfirmModal">Cancel</button>
+                <a id="delCmdItem" style="all: unset;" href=""><button>Delete</button></a>
+            </div>
+        </div>
+    </div>
+
+    <%- include("./side-panel.ejs") %> 
+    <%- include("../../partials/footer.ejs") %>
+    <script src="/scripts/show-checkout.js"></script>
+
+</body>
+</html>

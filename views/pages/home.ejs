@@ -1,0 +1,290 @@
+<%- include("../partials/head.ejs")  %>
+<link rel="stylesheet" href="/dist/css/owl.carousel.min.css">
+</head>
+
+<body>
+    <%- include("../partials/alert.ejs") %>
+    <%- include("../partials/header.ejs") %>
+    <div class="intro">
+        <h1>
+            roasted coffee <br />
+            for you
+        </h1>
+        <p>
+            The coffee is brewed by first roasting the green coffee beans over hot <br />
+            coals in a brazier. given an opportunity to sample.
+        </p>
+        <div class="intro-btns">
+            <button onclick="window.location='/menu/all';">Testy Coffee</button>
+            <a href="#about"><button>Read More</button></a>
+        </div>
+        <div class="social-media">
+            <span>
+                <a href="https://www.instagram.com/iftekhar_website_design/"><i class="bi bi-instagram"></i> Instagram</a>
+            </span>
+            <span>
+                <a href="https://www.behance.net/iftekharsaimum"><i class="bi bi-behance"></i> Behance</a>
+            </span>
+            <span>
+                <a href="https://www.linkedin.com/in/iftekhar-saimum/"><i class="bi bi-linkedin"></i> Linkedin</a>
+            </span>
+        </div>
+    </div>
+    </header>
+    <!-- opening section  -->
+    <section id="opening">
+        <div class="container">
+            <div class="full-row">
+                <div class="prod-1">
+                    <div class="images">
+                        <img class="product-img" src="/images/f-1.jpeg" alt="product_image">
+                        <img class="shape" src="/images/shape-1.png" alt="shape">
+                    </div>
+                    <div class="des">
+                        <span>01</span>
+                        <h3>Best Coffee flavour</h3>
+                        <p>Flavoring can make your coffee taste better and attractive.</p>
+                    </div>
+                </div>
+                <div class="prod-2">
+                    <div class="images">
+                        <img class="product-img" src="/images/f-2.jpeg" alt="product_image">
+                        <img class="shape" src="/images/shape-1.png" alt="shape">
+                    </div>
+                    <div class="des">
+                        <span>02</span>
+                        <h3>Place to Get Lost</h3>
+                        <p>Not only is traveling the best schooling, it also helps you get to know yourself.</p>
+                    </div>
+                </div>
+                <div class="prod-3">
+                    <div class="images">
+                        <img class="product-img" src="/images/f-3.jpeg" alt="product_image">
+                        <img class="shape" src="/images/shape-1.png" alt="shape">
+                    </div>
+                    <div class="des">
+                        <span>03</span>
+                        <h3>Proper Roasting</h3>
+                        <p>It took us between 26 and 50 minutes for light to dark roast.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- our history section -->
+    <section id="about">
+        <div class="container">
+            <div class="full-row">
+                <div class="about-img">
+                    <img src="/images/about.jpeg" alt="about-img">
+                </div>
+                <div class="des">
+                    <span>OUR HISTORY</span>
+                    <h1>CREATE A NEW STORY WITH US</h1>
+                    <p>Imagine Forest offers a combination of writing activities and writing games to break down the
+                        heavy task of writing a story into small and easy to manage activities.</p>
+                    <p>Story starters are a brilliant way to fix blank page syndrome (or writer’s block). Did you know
+                        that 67% of authors say the most difficult part of writing is starting their story?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- menu section -->
+    <section id="menu">
+        <div class="sm-heading">
+            <span>MENU</span>
+            <h1>CAFE POPULAR MENU</h1>
+        </div>
+        <div class="container-sm">
+            <div class="full-row" id="menu-row">
+                <% if(menus.length > 0 && menus.forEach((menu) => { %>
+                <a class="product-link" href="/menu/view/<%= menu._id %>" style="text-decoration: none;">
+                    <div class="single-menu">
+                        <img src="<%= menu.image %>" alt="menu">
+                        <div class="inner-section">
+                            <span><%= menu.name %></span>
+                            <span><%= menu.price %></span>
+                        </div>
+                    </div>
+                </a>
+                <% })) %>
+            </div>
+        </div>
+        <div class="menu-footer">
+            <a href="/menu/all#menu">view all menu</a>
+            <a href="#other-product">Other Products</a>
+        </div>
+    </section>
+    <!-- buy coffee machine -->
+    <section id="coffee-machine">
+        <div class="container-sm">
+            <div class="full-row">
+                <div class="des">
+                    <h3>COFFEE MACHINE, BUY FOR HOME</h3>
+                    <p>Coffee machines are super-efficient and more versatile than having a kettle or pots of coffee.
+                        Having coffee machines that use pods is so much better than having three different things.
+                        <br>
+                        With one machine you can make tea and coffee without waiting for the kettle to brew or the
+                        coffee to drip out
+                    </p>
+                    <a href="/menu/view/62b60f917ba0d4091b3e9eec"><span id="discover-machine">discover now</span></a>
+
+                </div>
+                <div class="product-img">
+                    <img src="/images/product-big.png" alt="product">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- popular product -->
+    <section id="other-product">
+        <div class="container-sm">
+            <div class="sm-heading">
+                <span>POPULAR PRODUCT</span>
+            </div>
+            <div class="lg-heading">
+                <h1>CAFE POPULAR PRODUCT</h1>
+                <a href="/menu/all">VIEW ALL</a>
+            </div>
+            <div class="full-row" id="popular-product-row">
+                <% if(products) { %>
+                <% products.forEach((product) => { %>
+                <div class="single-item" onclick="window.location='/menu/view/<%= product._id %>'">
+                    <div class="img">
+                        <img id="product-main-image" src="<%= product.image %>" alt="item">
+                    </div>
+                    <div class="item-des">
+                        <span><%= product.name %></span>
+                        <span>PRICE - <%= product.price %></span>
+                    </div>
+                </div>
+                <% }) %>
+                <% } %>
+            </div>
+        </div>
+    </section>
+    <!-- product review -->
+    <section id="review-product">
+        <div class="container-sm">
+            <div class="sm-heading">
+                <span>CUSTOMER FEEDBACK</span>
+            </div>
+            <h1>
+                OUR CUSTOMER REVIEW
+            </h1>
+            <div class="full-row">
+                <div class="owl-carousel">
+                    <!-- item all in all -->
+                    <% if(allItems) { %>
+                    <% [...allItems].forEach((item) => { %>
+                    <% [...item.reviews].forEach((review) => { %>
+                    <div class="owl-item-custom">
+                        <div class="quote">
+                            <img id="quote-img" src="/images/quote.png" alt="quote">
+                        </div>
+                        <div class="reviewed-user">
+                            <p class="review-body"><%= review.body %></p>
+                            <div class="user-img">
+                                <img src="<%= review.user.profilePics %>" alt="profile-pic">
+                            </div>
+                            <p class="name"><%= review.user.username %></p>
+                        </div>
+                    </div>
+                    <% }) %>
+                    <% }) %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- reservation -->
+    <section id="reservation">
+        <div class="container">
+            <div class="full-row">
+                <div class="location">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14607.599897019574!2d90.3842537968623!3d23.750946087692075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b9ffa01d62cb%3A0x3ddc407248737a4e!2sCoffee%20Buzz!5e0!3m2!1sen!2sbd!4v1645867722596!5m2!1sen!2sbd"
+                        style="border:0;" loading="lazy" allowfullscreen="true"></iframe>
+                </div>
+                <div class="reservation-input">
+                    <div class="sm-heading">
+                        <span>RESERVATION</span>
+                    </div>
+                    <h1>BOOKING A TABLE</h1>
+                    <form action="/reservation/table" method="post">
+                        <div class="single-box">
+                            <input type="number" min="1" max="30" name="person" placeholder="Person" required>
+                            <i class="bi bi-person"></i>
+                        </div>
+                        <div class="single-box">
+                            <input id="choose-date" name="date" type="date" required>
+                        </div>
+                        <div class="single-box">
+                            <input id="choose-time" name="time" type="time" required>
+                        </div>
+                        <input type="submit" value="BOOK A TABLE">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- our blog -->
+    <section id="our-blog">
+        <div class="container-sm">
+            <div class="sm-heading">
+                <span>FROM OUR BLOG</span>
+            </div>
+            <div class="lg-heading">
+                <h1>OUR NEWS & ARTICLES</h1>
+                <a href="/blog#our-blog">VIEW ALL</a>
+            </div>
+            <div class="full-row">
+                <% if(blogs) { %>
+                <% blogs.forEach((blog) => { %>
+                <div class="single-blog">
+                    <div class="blog-img">
+                        <img src="<%= blog.thumbnail %>" alt="blog-1">
+                    </div>
+                    <div class="blog-des">
+                        <small>
+                            <span>By:</span>
+                            <span class="name"><%= blog.author.username %>,</span>
+                            <span class="date">
+                                <%= blog.createdAt.toLocaleDateString() %>
+                            </span>
+                        </small>
+                        <h3><a href="/blog/show/<%= blog._id %>"><%= blog.title %></a></h3>
+                        <a href="/blog/show/<%= blog._id %>">READ MORE <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+                <% }) %>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <%- include("../partials/footer.ejs") %>
+    <script src="/dist/js/owl.carousel.min.js"></script>
+    <script>
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            responsiveClass: true,
+            nav: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    loop: true,
+                },
+                1000: {
+                    items: 1,
+                    loop: true,
+                }
+            }
+        })
+
+    </script>
+    <script src="/scripts/motion.js"></script>
+</body>
+
+</html>

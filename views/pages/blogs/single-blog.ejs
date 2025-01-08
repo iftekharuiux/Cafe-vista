@@ -1,0 +1,118 @@
+<%- include("../../partials/head.ejs") %>
+</head>
+
+<body>
+    <%- include("../../partials/alert.ejs") %>
+    <%- include("../../partials/header.ejs") %>
+    <section id="single-blog">
+        <div class="wrapper-sec">
+            <div class="main-blog-sec">
+                <% if(singleBlog) { %>
+                <div class="heading">
+                    <div>
+                        <h2><%= singleBlog.title %></h2>
+                        <p>By - <%= singleBlog.author.username %>, At: <%= singleBlog.createdAt?.toLocaleDateString() %>
+                        </p>
+                    </div>
+                    <div class="options" style="display: flex; gap: 10px;">
+                        <!-- blog post delete -->
+                        <% if(user && singleBlog) { %>
+                        <!-- displaying bookmark icon -->
+                        <% if(String(singleBlog.author._id) == String(user._id)) { %>
+                        <a title="Edit Post" style="color: whitesmoke;" href="/blog/edit/<%= singleBlog._id %>"><i
+                                class="bi bi-pencil"></i></a>
+                        <a title="Delete Post" style="color: whitesmoke;" href="/blog/delete/<%= singleBlog._id %>"><i
+                                class="bi bi-trash"></i></a>
+                        <% } %>
+                        <% } %>
+                        <!-- bookmark options -->
+                        <% if(allBookmarks) { %>
+                        <% let found = allBookmarks.bookmarks.some((bookmark) => { %>
+                        <% return String(bookmark) == String(singleBlog._id) %>
+                        <% }) %>
+                        <!-- displaying bookmark icon -->
+                        <% if (!found) { %>
+                        <div title="Add to bookmarks" class="bookmark" data-post="<%= singleBlog._id %>"><i
+                                class="bi bi-bookmark"></i></div>
+                        <% } else { %>
+                        <div title="Remove from bookmarks" class="bookmark" data-post="<%= singleBlog._id %>"><i
+                                class="bi bi-bookmark-fill"></i></div>
+                        <% } %>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="image-section">
+                    <img src="<%= singleBlog.thumbnail %>" alt="blog-img">
+                </div>
+                <div class="body">
+                    <p><%- singleBlog.body %></p>
+                </div>
+                <div class="like-dislike-sec">
+                    <% if(user) { %>
+                    <button id="likeBtn" title="Like" data-react="<%= singleBlog._id %>">
+                        <%- singleBlog.likes.includes(user._id) ? '<i class="bi bi-hand-thumbs-up-fill"></i>' : '<i class="bi bi-hand-thumbs-up"></i>' %>
+                        (<%= singleBlog.likes.length %>)
+                    </button>
+                    <button id="dislikeBtn" title="Dislike" data-react="<%= singleBlog._id %>">
+                        <%- singleBlog.dislikes.includes(user._id) ? '<i class="bi bi-hand-thumbs-down-fill"></i>' : '<i class="bi bi-hand-thumbs-down"></i>' %>
+                        (<%= singleBlog.dislikes.length %>)
+                    </button>
+                    <% } else { %>
+                    <button type="button" disabled title="Login to Like"
+                        style="background-color: unset; border: 1px solid white"><i class="bi bi-hand-thumbs-up"></i>
+                        (0)</button>
+                    <button type="button" disabled title="Login to Dislike"
+                        style="background-color: unset; border: 1px solid white"><i class="bi bi-hand-thumbs-down"></i>
+                        (0)</button>
+                    <% } %>
+                </div>
+                <div class="comment-section">
+                    <h2>Leave a comment</h2>
+                    <div class="send-comment-box">
+                        <% if(user) { %>
+                        <div class="img-data">
+                            <img src="<%= user.profilePics %>" alt="profile-pic">
+                            <div style="background-color: unset; padding-left: 5px;">
+                                <input id="comment-box" data-user="<%= JSON.stringify(user) %>"
+                                    data-comment="<%= singleBlog._id %>" title="Press enter to submit" type="text"
+                                    name="comment" placeholder="Enter your comment">
+                            </div>
+                        </div>
+                        <% } %>
+                        <div class="comments" id="comment">
+                            <% if (singleBlog.comments.length === 0) { %>
+                            <p>No comment yet</p>
+                            <% } else { %>
+                            <div id="comment-holder">
+                                <% singleBlog.comments?.forEach((comment) => { %>
+                                <div>
+                                    <div class="user">
+                                        <img src="<%= comment.user?.profilePics %>" alt="profile">
+                                        <div class="name-date">
+                                            <span><%= comment.user?.username %></span>
+                                            <span><%= (comment) ? comment.createdAt?.toLocaleDateString() : "" %></span>
+                                        </div>
+                                    </div>
+                                    <p class="comment-body"><%= comment.body %></p>
+                                </div>
+                                <% }) %>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <% } else { %>
+                <p style="color: whitesmoke;">Something went wrong...</p>
+                <% } %>
+            </div>
+        </div>
+    </section>
+    </header>
+
+    <%- include("../../partials/footer.ejs") %>
+    <!-- <script src="/scripts/likeDislike.js"></script> -->
+    <!-- <script src="/scripts/bookmark.js"></script> -->
+    <script src="/scripts/singlePage.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+<header>
+	<nav>
+		<ul>
+			<div class="left-menu">
+				<li><a href="<%= title.includes('| Home') ? '#' : '/' %>">Home</a></li>
+				<li><a href="<%= title.includes('| Home') ? '#menu' : '/#menu' %>">Menu</a></li>
+				<li><a href="<%= title.includes('| Home') ? '#reservation' : '/#reservation' %>">Reservation</a></li>
+				<li><a href="<%= title.includes('| Home') ? '#our-blog' : '/#our-blog' %>">Blog</a></li>
+			</div>
+			<div class="brand-image">
+				<li>
+					<a class="no-circle" href="<%= title.includes('| Home') ? '#' : '/#' %>"><img
+							src="/images/brand.png" alt="logo" /></a>
+				</li>
+			</div>
+			<div class="right-menu">
+				<li><a href="<%= title.includes('| Menu') ? '#menu' : '/menu/all#menu' %>">Shop</a></li>
+				<% if((user && user.role == "user") || !user) { %>
+				<li><a href="<%= title.includes('| Home') ? '#footer' : '/#footer' %>">Contact</a></li>
+				<% } %>
+				<% if(user && user.role == "admin") { %>
+				<li><a href="/dashboard">Dashboard</a></li>
+				<% } %>
+				<li class="user-det">
+					<% if (!user) { %>
+					<a href="/auth/login">Login</a>
+					<% } else { %>
+					<img class="profile-pic" src="<%= user.profilePics %>" title="<%= user.username %> "
+						alt="profile_pic" />
+					<div class="dropdown-menu">
+						<a href="/profile/create-profile"><i class="bi bi-person-circle"></i> Profile</a>
+						<a href="/auth/logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+					</div>
+					<% } %>
+				</li>
+			</div>
+			<div class="btns">
+				<li><i class="bi bi-list"></i></li>
+				<li class="search-section">
+					<i class="bi bi-search" id="search-icon"></i>
+					<i class="bi bi-x-lg set-invisible"></i>
+				</li>
+				<li>
+					<i class="bi bi-basket2-fill"></i>
+					<% if(user && orders && orders.length > 0) { %>
+					<span><%= orders.length %></span>
+					<% } %>
+				</li>
+			</div>
+		</ul>
+		<!-- vertical menu -->
+		<div class="dark-wrapper">
+			<div class="vertical-menu">
+				<div class="functionality">
+					<a href="<%= title.includes('| Home') ? '#' : '/' %>">
+						<img src="/images/brand.png" alt="brand" />
+					</a>
+					<i class="bi bi-x-circle-fill"></i>
+				</div>
+				<ul>
+					<li><a href="<%= title.includes('| Home') ? '#' : '/' %>">Home</a></li>
+					<li><a href="<%= title.includes('| Home') ? '#menu' : '/#menu' %>">Menu</a></li>
+					<li><a href="<%= title.includes('| Home') ? '#reservation' : '/#reservation' %>">Reservation</a>
+					</li>
+					<li><a href="<%= title.includes('| Home') ? '#our-blog' : '/#our-blog' %>">Blog</a></li>
+					<li><a href="<%= title.includes('| Menu') ? '#menu' : '/menu/all#menu' %>">Shop</a></li>
+					<li><a href="<%= title.includes('| Home') ? '#footer' : '/#footer' %>">Contact</a></li>
+					<% if(user && user.role == "admin") { %>
+					<li><a href="/dashboard">Dashboard</a></li>
+					<% } %>
+					<li class="user-det">
+						<% if (!user) { %>
+						<a href="/auth/login">Login</a>
+						<% } else { %>
+						<img class="profile-pic" src="<%= user.profilePics %>" alt="profile_pic" />
+						<div class="dropdown-menu">
+							<a href="/profile/create-profile"><i class="bi bi-person-circle"></i> Profile</a>
+							<a href="/auth/logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
+						</div>
+						<% } %>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- checkout bucket -->
+		<div class="checkout-dark-wrapper">
+			<div class="checkout-menu">
+				<div class="functionality">
+					<a href="<%= title.includes('| Home') ? '#' : '/' %>">
+						<img src="/images/brand.png" alt="brand" />
+					</a>
+					<i id="close-checkout" class="bi bi-x-circle-fill"></i>
+				</div>
+				<ul>
+					<% if(user && orders) { %>
+					<% orders.forEach((order) => { %>
+					<li>
+						<div class="checkout-img">
+							<img src="<%= order.productImg %>" alt="product">
+							<span class="quantity"><%= order.quantity %>x</span>
+						</div>
+						<div class="checkout-details">
+							<h3><%= order.checkoutProductName %></h3>
+							<div class="price-time">
+								<span title="total">Total - <%= order.checkoutPrice %></span>
+								<% if(order.status == "pending") { %>
+								<span title="shipping time" class="order-date"></span>
+								<% } else { %>
+								<p>Order will be delivered soon.</p>
+								<% } %>
+							</div>
+						</div>
+					</li>
+					<% }) %>
+					<% } else { %>
+					<p>No orders in queued.</p>
+					<% } %>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- search box -->
+	<div class="search-input">
+		<form action="/search">
+			<input type="search" name="search" id="search" placeholder="Search Products" />
+			<button type="submit"><i class="bi bi-search"></i></button>
+		</form>
+	</div>
+	<!-- shipping time required -->
+	<script src="/scripts/shipping-time.js"></script>

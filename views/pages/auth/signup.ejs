@@ -1,0 +1,58 @@
+<%- include("../../partials/head.ejs")  %>
+</head>
+<body>
+    <%- include("../../partials/alert.ejs")  %>
+    <%- include("../../partials/header.ejs") %>
+        <section id="auth" class="<%= (errors.username || errors.email || errors.password) ? "auth-height" : "auth-height-def"  %> ">
+            <form class="form" action="/auth/signup" method="post">
+                <h2>SIGNUP</h2>
+                <div class="input">
+                    <div class="inputBox">
+                        <label>Username</label>
+                        <input class="<%= errors.username && "is-invalid"%>" value="<%= values.username %>" type="text" name="username" placeholder="choose username"/>
+                        <% if (errors.username) { %>
+                            <div class="invalid-feedback">
+                                <p><%= errors.username %> </p>
+                            </div>
+                        <% } %>  
+                    </div>
+                    <div class="inputBox">
+                        <label>Email</label>
+                        <input class="<%= errors.email && "is-invalid"%>" value="<%= values.email %>" type="email" name="email" placeholder="example@xyz.com"/>
+                        <% if (errors.email) { %>
+                            <div class="invalid-feedback">
+                                <p><%= errors.email %> </p>
+                            </div>
+                        <% } %>  
+                    </div>
+                    <div class="inputBox">
+                        <label>Password</label>
+                        <input class="<%= errors.password && "is-invalid"%>" type="password" name="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"/>
+                        <% if (errors.password) { %>
+                            <div class="invalid-feedback">
+                                <p><%= errors.password %> </p>
+                            </div>
+                        <% } %>  
+                    </div>
+                    <div class="inputBox">
+                        <label>Confirm Password</label>
+                        <input class="<%= errors.confirmPassword && "is-invalid"%>" type="password" name="confirmPassword" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"/>
+                        <% if (errors.confirmPassword) { %>
+                            <div class="invalid-feedback">
+                                <p><%= errors.confirmPassword %> </p>
+                            </div>
+                        <% } %>  
+                    </div>
+                    <div class="inputBox">
+                        <input type="submit" value="Signup"/>
+                    </div>
+                </div>
+                <p class="reminder">Already have an account? <a href="/auth/login">Login now</a></p>
+            </form>
+        </section>
+
+    </header>
+
+    <%- include("../../partials/footer.ejs") %>
+</body>
+</html>

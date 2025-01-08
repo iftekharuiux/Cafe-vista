@@ -1,0 +1,65 @@
+<%- include("../../partials/head.ejs") %>
+</head>
+<body>
+        <%- include("../../partials/alert.ejs") %>
+        <%- include("../../partials/header.ejs") %>
+        <section id="admin-intro">
+            <div class="breadcrumb">
+                <h1>ADMIN DASHBOARD</h1>
+                <p><span>HOME</span> / DASHBOARD / SUBSCRIPTION</p>
+            </div>
+        </section>
+    </header>
+    <section id="all-subscribed-mail">
+        <div class="sm-heading">
+            <span>SUBSCRIPTION</span>
+            <h1>SUBSCRIBED MAIL</h1>
+        </div> 
+        <div class="container-sm">
+            <div class="full-row">
+                <div class="table-holder">
+                    <table>
+                        <tr>
+                            <th>#</th>
+                            <th>Email</th>
+                            <th>Subscribe time</th>
+                            <th>Options</th>
+                        </tr>
+                        <% if(subscribedMail) { %> 
+                            <% subscribedMail.forEach((mail, index) => { %> 
+                                <tr>
+                                    <td><%= index + 1 %></td>
+                                    <td><%= mail.subEmail %></td>  
+                                    <td><%= (mail.createdAt) %></td>
+                                    <td id="mail-status">
+                                        <a href="mailto:<%= mail.subEmail %>"><span>Compose</span></a>
+                                        <a href="/dashboard/deleteMail/<%= mail._id %>"><span>Delete</span></a>
+                                    </td>
+                                </tr>
+                            <% }) %> 
+                        <% } else { %>
+                            <tr>
+                                No subscribed mail found
+                            </tr>
+                        <% } %>  
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- send mail to all subscribed user -->
+        <% if(subscribedMail) { %>
+            <% let allMail = [] %> 
+            <% subscribedMail.forEach((mail) => { %>
+                <% allMail.push(mail.subEmail) %> 
+            <% }) %> 
+            <div class="send-all">
+                <a href="mailto:<%= allMail.join(",") %> "><button><i class="bi bi-pencil"></i> Compose for all</button></a>
+            </div>
+        <% } %>  
+    </section>
+    <%- include("./side-panel.ejs") %> 
+    <%- include("../../partials/footer.ejs") %>
+
+    <script src="/scripts/side-panel.js"></script>
+</body>
+</html>
