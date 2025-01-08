@@ -1,0 +1,37 @@
+{
+	"name": "coffee-shop",
+	"version": "1.0.0",
+	"description": "In this project I will create a coffee shop management system with two category of user availability. I will focus on the backend system most. \r ---\r The technologies, I will use for this project:\r 1. EJS  \r 2. SCSS\r 3. Javascript (client-side)\r 4. Nodejs (Server-side)\r 5. Express\r 6. MongoDB\r 7. Mongoose",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"bcrypt": "^5.0.1",
+		"cloudinary": "^1.30.0",
+		"connect-flash": "^0.1.1",
+		"connect-mongodb-session": "^3.1.1",
+		"deep-email-validator": "^0.1.21",
+		"dotenv": "^16.0.0",
+		"ejs": "^3.1.6",
+		"express": "^4.17.3",
+		"express-session": "^1.17.2",
+		"express-validator": "^6.14.0",
+		"googleapis": "^97.0.0",
+		"moment": "^2.29.1",
+		"mongoose": "^6.4.0",
+		"multer": "^1.4.4",
+		"nodemailer": "^6.7.3",
+		"reading-time": "^1.5.0",
+		"twilio": "^3.75.1",
+		"validator": "^13.7.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.18"
+	}
+}
