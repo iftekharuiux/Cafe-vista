@@ -1,0 +1,110 @@
+@mixin flex($just: center, $align: center) {
+	display: flex;
+	justify-content: $just;
+	align-items: $align;
+}
+@mixin neumorphism {
+	cursor: pointer;
+	margin-top: 20px;
+	box-shadow: -2px -2px 6px $form-box-shadow, 2px 2px 6px $form-shadow;
+	&:active {
+		opacity: 0.8;
+		margin-top: 20px;
+		box-shadow: inset -2px -2px 6px $form-box-shadow, inset 2px 2px 6px $form-shadow;
+	}
+	&::placeholder {
+		color: $muted;
+		font-size: 18px;
+	}
+	&:hover {
+		opacity: 0.9;
+	}
+}
+@mixin counter {
+	display: inline-block;
+	border: 1px solid $border-color;
+	width: 45px;
+	text-align: center;
+	user-select: none;
+	-webkit-user-select: none;
+	margin-left: -5px;
+	cursor: pointer;
+	&:first-child {
+		margin-left: 0px;
+		border-right: none;
+	}
+	&:nth-child(2) {
+		border-right: none;
+		cursor: auto;
+	}
+}
+@mixin container {
+	padding: 20px;
+	display: flex;
+}
+@mixin container-sm {
+	padding: 20px 8% 20px 8%;
+	margin: auto;
+	display: flex;
+}
+@mixin sm-heading {
+	color: $font-color;
+	display: inline-block;
+	padding: 4px 13px;
+	background-color: $highlight;
+	border-radius: 4px;
+	font-size: 13px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+@mixin big-heading {
+	@include sm-heading();
+	text-decoration: none;
+	font-size: 16px;
+	letter-spacing: normal;
+	padding: 8px 22px;
+	transition: 0.3s all;
+	&:hover {
+		background-color: $light-dark;
+	}
+}
+// mixin for common modals
+@mixin modal {
+	top: 0;
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	background-color: $modal-bg;
+	z-index: 9999;
+	display: none;
+}
+// all breadcrumbs mixin
+@mixin breadcrumbs {
+	background: {
+		image: url(/images/breadcrumb-light.jpg);
+		size: cover;
+		position: center;
+		repeat: no-repeat;
+	}
+	height: 100vh;
+	.breadcrumb {
+		background-color: $wrapper-bg;
+		@include flex(center, center);
+		flex-direction: column;
+		height: inherit;
+		h1 {
+			margin-bottom: 20px;
+			color: $font-color;
+			font: 500 55px $bebas;
+			text-align: center;
+		}
+		p {
+			text-align: center;
+			font: 400 17px "Jost";
+			color: $font-color;
+			span {
+				color: $highlight;
+			}
+		}
+	}
+}
